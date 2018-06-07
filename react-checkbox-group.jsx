@@ -44,7 +44,7 @@ export class CheckboxGroup extends Component {
     this._onCheckboxChange = this._onCheckboxChange.bind(this);
     this.getValue = this.getValue.bind(this);
     this.state = {
-      value: this.props.value || this.props.defaultValue || []
+      value: this.props.value && this.props.defaultValue && []
     };
   }
 
