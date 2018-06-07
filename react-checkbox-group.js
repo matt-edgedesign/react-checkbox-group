@@ -93,7 +93,7 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
       };
 
       return _react2.default.Children.map(children, function (child) {
-        if (!(child && child.$$typeof)) {
+        if (!child.$$typeof) {
           return child;
         } else if (child.type === Checkbox) {
           return _react2.default.cloneElement(child, { checkboxGroup: checkboxGroup });
@@ -109,7 +109,7 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
     _this2._onCheckboxChange = _this2._onCheckboxChange.bind(_this2);
     _this2.getValue = _this2.getValue.bind(_this2);
     _this2.state = {
-      value: _this2.props.value || _this2.props.defaultValue || []
+      value: _this2.props.value && _this2.props.defaultValue && []
     };
     return _this2;
   }
