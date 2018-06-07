@@ -68,8 +68,6 @@ var Checkbox = exports.Checkbox = function (_Component) {
   return Checkbox;
 }(_react.Component);
 
-Checkbox.displayName = 'Checkbox';
-
 var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
   _inherits(CheckboxGroup, _Component2);
 
@@ -77,33 +75,6 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
     _classCallCheck(this, CheckboxGroup);
 
     var _this2 = _possibleConstructorReturn(this, (CheckboxGroup.__proto__ || Object.getPrototypeOf(CheckboxGroup)).call(this, props));
-
-    _this2._prepareBoxes = function (children) {
-      var maxDepth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-      var depth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-      if (depth > maxDepth) {
-        return children;
-      }
-
-      var checkboxGroup = {
-        name: _this2.props.name,
-        checkedValues: _this2.state.value,
-        onChange: _this2._onCheckboxChange
-      };
-
-      return _react2.default.Children.map(children, function (child) {
-        if (!child.$$typeof) {
-          return child;
-        } else if (child.type === Checkbox) {
-          return _react2.default.cloneElement(child, { checkboxGroup: checkboxGroup });
-        } else {
-          return _react2.default.cloneElement(child, {}, child.props.children ? _react2.default.Children.map(child.props.children, function (c) {
-            return _this2._prepareBoxes(c, maxDepth, depth + 1);
-          }) : null);
-        }
-      });
-    };
 
     _this2._isControlledComponent = _this2._isControlledComponent.bind(_this2);
     _this2._onCheckboxChange = _this2._onCheckboxChange.bind(_this2);
@@ -126,20 +97,26 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
   }, {
     key: 'render',
     value: function render() {
+      var checkboxGroup = {
+        name: this.props.name,
+        checkedValues: this.state.value,
+        onChange: this._onCheckboxChange
+      };
+
       var _props2 = this.props,
           Component = _props2.Component,
           name = _props2.name,
           value = _props2.value,
           onChange = _props2.onChange,
           children = _props2.children,
-          _props2$checkboxDepth = _props2.checkboxDepth,
-          checkboxDepth = _props2$checkboxDepth === undefined ? 1 : _props2$checkboxDepth,
-          rest = _objectWithoutProperties(_props2, ['Component', 'name', 'value', 'onChange', 'children', 'checkboxDepth']);
+          rest = _objectWithoutProperties(_props2, ['Component', 'name', 'value', 'onChange', 'children']);
 
       return _react2.default.createElement(
         Component,
         rest,
-        this._prepareBoxes(children, checkboxDepth)
+        _react2.default.Children.map(children, function (child) {
+          return _react2.default.cloneElement(child, { checkboxGroup: checkboxGroup });
+        })
       );
     }
   }, {
@@ -179,7 +156,6 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
   return CheckboxGroup;
 }(_react.Component);
 
-CheckboxGroup.displayName = 'CheckboxGroup';
 CheckboxGroup.defaultProps = {
   Component: "div"
 };
