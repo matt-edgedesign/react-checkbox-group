@@ -44,7 +44,7 @@ export class CheckboxGroup extends Component {
     this._onCheckboxChange = this._onCheckboxChange.bind(this);
     this.getValue = this.getValue.bind(this);
     this.state = {
-      value: this.props.value && this.props.defaultValue && []
+      value: this.props.value || this.props.defaultValue || []
     };
   }
 
@@ -71,7 +71,7 @@ export class CheckboxGroup extends Component {
       if (!child.$$typeof) {
         return child;
       }
-      else if (child.type && child.type.prototype instanceof Checkbox) {
+      else if (child.type === Checkbox) {
         return React.cloneElement(child, {checkboxGroup})
       }
       else {
